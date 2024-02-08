@@ -70,10 +70,9 @@ class HomeController extends Controller
 
             $names = Patients::all()->where('status', '=', '0')->pluck('name', 'id');
 
-            $investigation_history =  investigationHistory::all()->where('patient_id', '=', $id)->where('appointment_date', '=', $currentDate);
+            $investigation_history =  investigationHistory::all()->where('patient_id', '=', $id)->where('appoinment_date', '=', $currentDate);
 
             $reccomanded_opd_drugs =  reccomandedOpdDrugs::all()->where('patient_id', '=', $id)->where('appoinment_date', '=', $currentDate);
-
 
             $reccomanded_outside_drugs =  reccomandOutsideDrugs::all()->where('patient_id', '=', $id)->where('appoinment_date', '=', $currentDate);
 

@@ -58,7 +58,6 @@ class DrugsController extends Controller
             ];
 
             Drugs::create($data);
-            //dd($data);
 
             session()->flash('message', 'Successfully Added Drug !');
             return redirect()->back()->with('success', 'Successfully Added Drug !');

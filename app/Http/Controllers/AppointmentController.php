@@ -8,6 +8,7 @@ use App\Models\Patients;
 use App\Models\Appoinment;
 use App\Models\Patient;
 use App\Models\InvestigationDetails;
+//use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use PDF;
 use Carbon\Carbon;
 use Exception;
@@ -135,7 +136,7 @@ class AppointmentController extends Controller
             ->where('patients.status', '=', '0')
             ->where('appoinments.active', '=', '0')->get();
 
-            
+
             return view('appointmentWaitingList', ['waiting_list' => $waiting_list]);
         } catch (Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
@@ -216,8 +217,8 @@ class AppointmentController extends Controller
             // Loop through the data and save to the database using the Query Builder
             if (!is_null($opdDrugs) && (is_array($opdDrugs) || is_object($opdDrugs))) {
                 foreach ($opdDrugs as $key => $opdDrug) {
-                    DB::table('reccomanded_opd_drugs')->insert([
-                        'appointment_date' => $currentDate,
+                    DB::table('reccomand_outside_drugs')->insert([
+                        'appoinment_date' => $currentDate,
                         'patient_id' => $request->patient_id,
                         'drug' => $opdDrug,
                         'dose' => $doses[$key],
@@ -236,8 +237,8 @@ class AppointmentController extends Controller
 
             if (!is_null($outsideDrugs) && (is_array($outsideDrugs) || is_object($outsideDrugs))) {
                 foreach ($outsideDrugs as $key => $outDrug) {
-                    DB::table('reccomanded_outside_drugs')->insert([
-                        'appointment_date' => $currentDate,
+                    DB::table('reccomand_outside_drugs')->insert([
+                        'appoinment_date' => $currentDate,
                         'patient_id' => $request->patient_id,
                         'drug' => $outDrug,
                         'dose' => $outsidedose[$key],
@@ -255,11 +256,10 @@ class AppointmentController extends Controller
             if (!is_null($investi) && (is_array($investi) || is_object($investi))) {
                 // Loop through the data and save to the database using the Query Builder
                 foreach ($investi as $key => $inves) {
-                    DB::table('investigation_history')->insert([
-                        'investtigation' => $inves,
+                    DB::table('investigation_histories')->insert([
+                        'investigation' => $inves,
                         'patient_id' => $request->patient_id,
-                        'appointment_date' => $currentDate,
-
+                        'appoinment_date' => $currentDate,
                     ]);
                 }
             }
@@ -272,7 +272,7 @@ class AppointmentController extends Controller
                     DB::table('medical_test')->insert([
                         'medical_test' => $medtest,
                         'patient_id' => $request->patient_id,
-                        'appointment_date' => $currentDate,
+                        'appoinment_date' => $currentDate,
                         // Add other fields as needed
                     ]);
                 }

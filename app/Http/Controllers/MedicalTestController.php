@@ -52,9 +52,9 @@ class MedicalTestController extends Controller
     {
         try {
             $medical_test_list =  MedicalTest::all()->where('status','=','0');
-            
+
             $medical_test_list_deleted =  MedicalTest::all()->where('status','=','1');
-           
+        
             return view('medicalTestList', ['medical_test_list' => $medical_test_list, 'medical_test_list_deleted' => $medical_test_list_deleted]);
         } catch (Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());

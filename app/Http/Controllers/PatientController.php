@@ -203,11 +203,11 @@ class PatientController extends Controller
         try {
 
             $titles =  Title::all();
-//
+
             $famname =  Patients::all()->groupBy('family_name');
 
             $patients =  Patients::with('title')->select('patients.*', 'titles.id as title')->join('titles', 'patients.title', '=', 'titles.id')->where('patients.id', $id)->get();
-//dd($patients );
+
             return view('patientEditViewTable', ['titles' => $titles, 'patients' => $patients, 'famname' => $famname]);
         } catch (Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());

@@ -16,11 +16,11 @@ class CreateInvestigationDetailsTable extends Migration
         Schema::create('investigation_details', function (Blueprint $table) {
             $table->id();
             $table->integer('patient_id');
-            $table->string('investigation_id')->nullable;
+            $table->integer('investigation_id')->default(0);
             $table->string('investigation_details')->nullable;
             $table->integer('treatment');
-            $table->integer('medicalTest')->nullable;
-            $table->date('nextVisitDate')->nullable;
+            $table->string('medicalTest')->nullable;
+            $table->date('next_visit_date')->nullable;
             $table->double('amount')->nullable;
             $table->string('comment');
             $table->date('channel_date');
