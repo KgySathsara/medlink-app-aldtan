@@ -161,11 +161,8 @@ class AppointmentController extends Controller
 
     public function  finishedList()
     {
-
         try {
-
             $currentDate = Carbon::today();
-
             $finished_list =  DB::table('appoinments')
                 ->select('appoinments.*', DB::raw('patients.name as patientname'))
                 ->leftjoin('patients', 'appoinments.patient_id', '=', 'patients.id')

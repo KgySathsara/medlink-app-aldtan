@@ -86,9 +86,8 @@ class PatientController extends Controller
 
         try {
 
+
             $patient_list = Patients::with('title')->select('patients.*', 'titles.id as title')->leftJoin('titles', 'patients.title', '=', 'titles.id')->get();
-
-
             if (isset($request->family_name)) {
                 $family_name = $request->family_name;
                 $patient_list = $patient_list->where("patients.family_name", $family_name);
@@ -96,8 +95,6 @@ class PatientController extends Controller
             $patient_list = $patient_list->where("patients.status", "=", "0")
                 ->select('patients.*', 'titles.title as title')
                 ->get();
-
-
             return view('patisentpopup', ['patient_list' => $patient_list, 'currentPatientId' => $request->currentPatientId]);
         } catch (Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
@@ -159,7 +156,6 @@ class PatientController extends Controller
             ]);
 
             $famname =  Patients::all('family_name')->groupBy('family_name');
-
             $patient_list = Patients::with('title')->join('titles', 'patients.title', '=', 'titles.id')->get();
 
             if (isset($request->keyword)) {
@@ -288,7 +284,7 @@ class PatientController extends Controller
                 ->where('patients.id', "=", $id);
 
             $investigation_details = InvestigationDetails::all()->where('patient_id', '=', $id);
-            return view('investigationHistory', ['investigation_history' => $investigation_history, 'patients' => $patients, 'investigation_details' => $investigation_details]);
+            return view('investigationHistory', ['investigation_histories' => $investigation_history, 'patients' => $patients, 'investigation_details' => $investigation_details]);
         } catch (Exception $e) {
             return response()->json([
                 'error' => $e->getMessage()
